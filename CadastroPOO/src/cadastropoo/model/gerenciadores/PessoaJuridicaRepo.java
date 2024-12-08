@@ -1,0 +1,70 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package cadastropoo.model.gerenciadores;
+
+import cadastropoo.model.entidades.PessoaJuridica;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ *
+ * @author monster
+ */
+public class PessoaJuridicaRepo {
+    
+    private List<PessoaJuridica> pessoasJuridicas;
+    
+    public PessoaJuridicaRepo() {
+        pessoasJuridicas = new ArrayList();
+    }
+    
+    public void inserir(PessoaJuridica... pessoasJuridicas) {
+        for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
+            this.pessoasJuridicas.add(pessoaJuridica);
+        }
+    }
+    
+    public void alterar(List<PessoaJuridica> pessoasJuridicas) {
+        this.pessoasJuridicas = pessoasJuridicas;
+    }
+    
+    public void excluir(PessoaJuridica pessoaJuridica) {
+        this.pessoasJuridicas.remove(pessoaJuridica);
+    }
+    
+    public Optional<PessoaJuridica> obter(int id) {
+        return pessoasJuridicas.stream()
+                .filter(pessoas -> pessoas.getId() == id)
+                .findFirst();
+    }
+    
+    public String obterTodos() {
+        String pessoasJuridicas = "\n";
+        for (PessoaJuridica pessoa: this.pessoasJuridicas) {
+            pessoasJuridicas += pessoa.exibir();
+        }
+        return pessoasJuridicas;
+    }
+    
+    public void persistir(String nomeArquivo) throws Exception {
+        FileOutputStream fos = new FileOutputStream(nomeArquivo);
+        ObjectOutputStream ous = new ObjectOutputStream(fos);
+        ous.writeObject(this.pessoasJuridicas);
+        System.out.println("Dados de Pessoa Jurídica Armazenados.");
+    }
+    
+    public void recuperar(String nomeArquivo) throws Exception {
+        FileInputStream fis = new FileInputStream(nomeArquivo);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        this.pessoasJuridicas = (List<PessoaJuridica>) ois.readObject();
+        System.out.println("Dados de Pessoa Jurídica Recuperados.");
+    }
+
+}
