@@ -27,16 +27,15 @@ public class PessoaJuridicaRepo {
     
     public void inserir(PessoaJuridica... pessoasJuridicas) {
         for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
-            Optional<PessoaJuridica> temPessoaJuridica = this.pessoasJuridicas.stream()
+            this.pessoasJuridicas.stream()
                     .filter(pessoa -> pessoa.getId() == pessoaJuridica.getId()) // Verifica se o ID já se encontra inserido no Array
-                    .findFirst();
-            if (temPessoaJuridica.isPresent()) {
-                System.out.println("A pessoa jurídica " + pessoaJuridica.getNome() + 
-                        " não foi inserida, pois o ID " + pessoaJuridica.getId() +
-                        " a que ela se refere já se encontra inserido no Array.");
-            } else {
-                this.pessoasJuridicas.add(pessoaJuridica);
-            }
+                    .findFirst()
+                    .ifPresentOrElse(
+                            (valor) -> System.out.println("A pessoa jurídica " + pessoaJuridica.getNome() + 
+                                    " não foi inserida, pois o ID " + pessoaJuridica.getId() +
+                                    " a que ela se refere já se encontra inserido no Array."), 
+                            () -> this.pessoasJuridicas.add(pessoaJuridica)
+                    );
         }
     }
     
