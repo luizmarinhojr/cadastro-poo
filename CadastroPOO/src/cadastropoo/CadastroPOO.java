@@ -20,66 +20,43 @@ public class CadastroPOO {
      */
     public static void main(String[] args) {
         
-        // PESSOAS FÍSICAS ABAIXO
+        String opcoes = """
+        =======================================
+        1 - Incluir Pessoa
+        2 - Alterar Pessoa
+        3 - Excluir pessoa
+        4 - Buscar pelo Id
+        5 - Exibir Todos
+        6 - Persistir Dados
+        7 - Recuperar Dados
+        0 - Finalizar Programa
+        =======================================
+        """;
         
-        PessoaFisicaRepo repo1 = new PessoaFisicaRepo();
-        
-        PessoaFisica pessoaFisica1 = new PessoaFisica(
-                1, "Ana", "11111111111", 25
-        );
-        
-        PessoaFisica pessoaFisica2 = new PessoaFisica(
-                2, "Carlos", "22222222222", 52
-        );
-        
-        repo1.inserir(pessoaFisica1, pessoaFisica2);
-
-        try {
-            repo1.persistir("PessoasFisicas.bin");
-        } catch (Exception ex) {
-            System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
-        }
-        
-        PessoaFisicaRepo repo2 = new PessoaFisicaRepo();
-        
-        try {
-            repo2.recuperar("PessoasFisicas.bin");
-        } catch(Exception ex) {
-            System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
-        }
-        
-        System.out.println(repo2.obterTodos());
+        System.out.println(opcoes);
         
         
-        // PESSOAS JURÍDICAS ABAIXO
         
-        PessoaJuridicaRepo repo3 = new PessoaJuridicaRepo();
-        
-        PessoaJuridica pessoaJuridica1 = new PessoaJuridica(
-                3, "XPTO Sales", "33333333333333"
-        );
-        
-        PessoaJuridica pessoaJuridica2 = new PessoaJuridica(
-                4, "XPTO Solutions", "44444444444444"
-        );
-        
-        repo3.inserir(pessoaJuridica1, pessoaJuridica2);
-        
-        try {
-            repo3.persistir("PessoasJuridicas.bin");
-        } catch (Exception ex) {
-            System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
-        }
-        
-        PessoaJuridicaRepo repo4 = new PessoaJuridicaRepo();
-        
-        try {
-            repo4.recuperar("PessoasJuridicas.bin");
-        } catch(Exception ex) {
-            System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
-        }
-        
-        System.out.println(repo4.obterTodos());
+//        a. Apresentar as opções do programa para o usuário, sendo 1 para incluir, 2 para
+//        alterar, 3 para excluir, 4 para exibir pelo id, 5 para exibir todos, 6 para salvar
+//        dados, 7 para recuperar dados e 0 para finalizar a execução.
+//        b. Selecionada a opção incluir, escolher o tipo (Física ou Jurídica), receber os dados
+//        a partir do teclado e adicionar no repositório correto.
+//        c. Selecionada a opção alterar, escolher o tipo (Física ou Jurídica), receber o id a
+//        partir do teclado, apresentar os dados atuais, solicitar os novos dados e alterar no
+//        repositório correto.
+//        d. Selecionada a opção excluir, escolher o tipo (Física ou Jurídica), receber o id a
+//        partir do teclado e remover do repositório correto.
+//        e. Selecionada a opção obter, escolher o tipo (Física ou Jurídica), receber o id a
+//        partir do teclado e apresentar os dados atuais para a entidade.
+//        f. Selecionada a opção obterTodos, escolher o tipo (Física ou Jurídica) e apresentar
+//        os dados de todas as entidades do repositório correto.
+//        g. Selecionada a opção salvar, solicitar o prefixo dos arquivos e persistir os dados
+//        nos arquivos [prefixo].fisica.bin e [prefixo].juridica.bin.
+//        h. Selecionada a opção recuperar, solicitar o prefixo dos arquivos e obter os dados
+//        a partir dos arquivos [prefixo].fisica.bin e [prefixo].juridica.bin.
+//        i. Nas opções salvar e recuperar devem ser tratadas as exceções.
+//        j. Selecionada a opção sair, finalizar a execução do sistema.
         
     }
 }

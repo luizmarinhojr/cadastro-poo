@@ -24,7 +24,7 @@ public abstract class Pessoa implements Serializable {
     
     public Pessoa() {}
     
-    public abstract String exibir();
+    public abstract String exibir(); // Obriga que as classes filhas implementem o método.
     
     public int getId() {
         return id;
