@@ -27,7 +27,16 @@ public class PessoaFisicaRepo {
     
     public void inserir(PessoaFisica... pessoasFisicas) {
         for (PessoaFisica pessoaFisica: pessoasFisicas) {
-            this.pessoasFisicas.add(pessoaFisica);
+            Optional<PessoaFisica> temPessoaFisica = this.pessoasFisicas.stream()
+                    .filter(pessoa -> pessoa.getId() == pessoaFisica.getId()) // Verifica se o ID já se encontra inserido no Array
+                    .findFirst();
+            if (temPessoaFisica.isPresent()) {
+                System.out.println("A pessoa física " + pessoaFisica.getNome() + 
+                        " não foi inserida, pois o ID " + pessoaFisica.getId() +
+                        " a que ela se refere já se encontra inserido no Array.");
+            } else {
+                this.pessoasFisicas.add(pessoaFisica);
+            }
         }
     }
     
@@ -46,7 +55,7 @@ public class PessoaFisicaRepo {
     }
 
     public String obterTodos() {
-        String pessoasFisicas = "\n";
+        String pessoasFisicas = "";
         for (PessoaFisica pessoaFisica: this.pessoasFisicas) {
             pessoasFisicas += pessoaFisica.exibir();
         }

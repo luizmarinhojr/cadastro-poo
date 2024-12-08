@@ -27,7 +27,16 @@ public class PessoaJuridicaRepo {
     
     public void inserir(PessoaJuridica... pessoasJuridicas) {
         for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
-            this.pessoasJuridicas.add(pessoaJuridica);
+            Optional<PessoaJuridica> temPessoaJuridica = this.pessoasJuridicas.stream()
+                    .filter(pessoa -> pessoa.getId() == pessoaJuridica.getId()) // Verifica se o ID já se encontra inserido no Array
+                    .findFirst();
+            if (temPessoaJuridica.isPresent()) {
+                System.out.println("A pessoa jurídica " + pessoaJuridica.getNome() + 
+                        " não foi inserida, pois o ID " + pessoaJuridica.getId() +
+                        " a que ela se refere já se encontra inserido no Array.");
+            } else {
+                this.pessoasJuridicas.add(pessoaJuridica);
+            }
         }
     }
     
@@ -46,7 +55,7 @@ public class PessoaJuridicaRepo {
     }
     
     public String obterTodos() {
-        String pessoasJuridicas = "\n";
+        String pessoasJuridicas = "";
         for (PessoaJuridica pessoa: this.pessoasJuridicas) {
             pessoasJuridicas += pessoa.exibir();
         }

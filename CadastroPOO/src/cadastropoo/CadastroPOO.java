@@ -48,7 +48,7 @@ public class CadastroPOO {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
         
-        System.out.println(repo2.obterTodos());
+        System.out.print(repo2.obterTodos());
         
         
         // PESSOAS JURÍDICAS ABAIXO
@@ -79,7 +79,7 @@ public class CadastroPOO {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
         
-        System.out.println(repo4.obterTodos());
+        System.out.print(repo4.obterTodos());
         
     }
 }
