@@ -5,6 +5,7 @@
 package cadastropoo.model.gerenciadores;
 
 import cadastropoo.model.entidades.PessoaJuridica;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -27,7 +28,12 @@ public class PessoaJuridicaRepo {
     
     public void inserir(PessoaJuridica... pessoasJuridicas) {
         for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
-            this.pessoasJuridicas.add(pessoaJuridica);
+            if (this.pessoasJuridicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaJuridica.getId())) {
+                System.out.println("A pessoa jurídica %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array."
+                                    .formatted(pessoaJuridica.getNome(), pessoaJuridica.getId()));
+            } else {
+                this.pessoasJuridicas.add(pessoaJuridica);
+            }
         }
     }
     
@@ -46,7 +52,8 @@ public class PessoaJuridicaRepo {
     }
     
     public String obterTodos() {
-        String pessoasJuridicas = "\n";
+        this.pessoasJuridicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
+        String pessoasJuridicas = "";
         for (PessoaJuridica pessoa: this.pessoasJuridicas) {
             pessoasJuridicas += pessoa.exibir();
         }
@@ -54,6 +61,7 @@ public class PessoaJuridicaRepo {
     }
     
     public void persistir(String nomeArquivo) throws Exception {
+        recuperar(nomeArquivo);
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasJuridicas);
@@ -61,10 +69,13 @@ public class PessoaJuridicaRepo {
     }
     
     public void recuperar(String nomeArquivo) throws Exception {
-        FileInputStream fis = new FileInputStream(nomeArquivo);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        this.pessoasJuridicas = (List<PessoaJuridica>) ois.readObject();
-        System.out.println("Dados de Pessoa Jurídica Recuperados.");
+        if (new File(nomeArquivo).exists()) {
+            FileInputStream fis = new FileInputStream(nomeArquivo);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<PessoaJuridica> dadosRecuperados = (List<PessoaJuridica>) ois.readObject();
+            dadosRecuperados.forEach((dado) -> inserir(dado));
+            System.out.println("Dados de Pessoa Jurídica Recuperados.");
+        }
     }
 
 }

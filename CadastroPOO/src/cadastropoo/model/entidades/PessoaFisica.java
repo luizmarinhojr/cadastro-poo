@@ -27,10 +27,12 @@ public class PessoaFisica extends Pessoa implements Serializable {
     
     @Override
     public String exibir(){
-        return "Id: " + getId() + "\n" +
-                "Nome: " + getNome() + "\n" +
-                "CPF: " + getCpf() + "\n" +
-                "Idade: " + getIdade() + "\n";
+        return """
+               Id: %d
+               Nome: %s
+               CPF: %s
+               Idade: %d
+               """.formatted(getId(), getNome(), getCpf(), getIdade());
     }
 
     public String getCpf() {
