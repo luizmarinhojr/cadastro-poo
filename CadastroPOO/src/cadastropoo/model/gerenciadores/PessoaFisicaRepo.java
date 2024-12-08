@@ -5,6 +5,7 @@
 package cadastropoo.model.gerenciadores;
 
 import cadastropoo.model.entidades.PessoaFisica;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -27,14 +28,12 @@ public class PessoaFisicaRepo {
     
     public void inserir(PessoaFisica... pessoasFisicas) {
         for (PessoaFisica pessoaFisica: pessoasFisicas) {
-            this.pessoasFisicas.stream()
-                    .filter(pessoa -> pessoa.getId() == pessoaFisica.getId()) // Verifica se o ID já se encontra inserido no Array
-                    .findFirst()
-                    .ifPresentOrElse(
-                            (valor) -> System.out.println("A pessoa física " + pessoaFisica.getNome() + 
-                                    " não foi inserida, pois o ID " + pessoaFisica.getId() +
-                                    " a que ela se refere já se encontra inserido no Array."), 
-                            () -> this.pessoasFisicas.add(pessoaFisica));
+            if (this.pessoasFisicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaFisica.getId())) {
+                System.out.println("A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array."
+                        .formatted(pessoaFisica.getNome(), pessoaFisica.getId()));
+            } else {
+                this.pessoasFisicas.add(pessoaFisica);
+            }  
         }
     }
     
@@ -53,6 +52,7 @@ public class PessoaFisicaRepo {
     }
 
     public String obterTodos() {
+        this.pessoasFisicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
         String pessoasFisicas = "";
         for (PessoaFisica pessoaFisica: this.pessoasFisicas) {
             pessoasFisicas += pessoaFisica.exibir();
@@ -60,17 +60,21 @@ public class PessoaFisicaRepo {
         return pessoasFisicas;
     }
     
-    public void persistir(String nomeArquivo) throws Exception{
+    public void persistir(String nomeArquivo) throws Exception {
+        recuperar(nomeArquivo); // Recupera os dados do arquivo 
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
-        ous.writeObject(pessoasFisicas);
+        ous.writeObject(this.pessoasFisicas);
         System.out.println("Dados de Pessoa Física Armazenados.");
     }
     
-    public void recuperar(String nomeArquivo) throws Exception{
-        FileInputStream fis = new FileInputStream(nomeArquivo);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        pessoasFisicas = (List<PessoaFisica>) ois.readObject();
-        System.out.println("Dados de Pessoa Física Recuperados.");
+    public void recuperar(String nomeArquivo) throws Exception {
+        if (new File(nomeArquivo).exists()) { // Verifica se o arquivo existe no diretório
+            FileInputStream fis = new FileInputStream(nomeArquivo);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<PessoaFisica> dadosRecuperados = (List<PessoaFisica>) ois.readObject();
+            dadosRecuperados.forEach((dado) -> inserir(dado));
+            System.out.println("Dados de Pessoa Física Recuperados.");
+        }
     }
 }
