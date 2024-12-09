@@ -46,12 +46,12 @@ classDiagram
     PessoaFisicaRepo : +inserir(pessoaFisica) void
     PessoaFisicaRepo : +alterar(pessoaFisicaAtual, pessoaFisicaNova) void
     PessoaFisicaRepo : +excluir(pessoaFisica) void
-    PessoaFisicaRepo : +obter(id) Optional~PessoaJuridica~
+    PessoaFisicaRepo : +obter(id) Optional~PessoaFisica~
     PessoaFisicaRepo : +obterTodos() String
     PessoaFisicaRepo : +persistir(prefixo) void
     PessoaFisicaRepo : +recuperar(prefixo) void
     
-    PessoaJuridicaRepo : -List<PessoaJuridica> pessoasFisicas
+    PessoaJuridicaRepo : -List<PessoaJuridica> pessoasJuridicas
     PessoaJuridicaRepo : +inserir(pessoaJuridica) void
     PessoaJuridicaRepo : +alterar(pessoaJuridicaAtual, pessoaJuridicaNova) void
     PessoaJuridicaRepo : +excluir(pessoaJuridica) void
