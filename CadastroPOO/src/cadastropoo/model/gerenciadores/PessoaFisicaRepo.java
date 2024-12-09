@@ -26,26 +26,26 @@ public class PessoaFisicaRepo {
         pessoasFisicas = new ArrayList();
     }
     
-    public void inserir(PessoaFisica... pessoasFisicas) {
-        for (PessoaFisica pessoaFisica: pessoasFisicas) {
-            if (this.pessoasFisicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaFisica.getId())) {
-                System.out.println("\n**** A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
-                        .formatted(pessoaFisica.getNome(), pessoaFisica.getId()));
-            } else {
-                this.pessoasFisicas.add(pessoaFisica);
-            }  
-        }
+    public void inserir(PessoaFisica pessoaFisica) {
+        if (this.pessoasFisicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaFisica.getId())) {
+            System.out.println("\n**** A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
+                    .formatted(pessoaFisica.getNome(), pessoaFisica.getId()));
+        } else {
+            this.pessoasFisicas.add(pessoaFisica);
+            System.out.println("\n**** Pessoa Física inserida com sucesso ****");
+        }  
     }
     
-    public void alterar(PessoaFisica pessoaFisica, Integer id, String nome, String cpf, Integer idade) {
-        pessoaFisica.setId(id);
-        pessoaFisica.setNome(nome);
-        pessoaFisica.setCpf(cpf);
-        pessoaFisica.setIdade(idade);
+    public void alterar(PessoaFisica pessoaFisicaAtual, PessoaFisica pessoaFisicaNova) {
+        pessoaFisicaAtual.setId(pessoaFisicaNova.getId());
+        pessoaFisicaAtual.setNome(pessoaFisicaNova.getNome());
+        pessoaFisicaAtual.setCpf(pessoaFisicaNova.getCpf());
+        pessoaFisicaAtual.setIdade(pessoaFisicaNova.getIdade());
     }
     
     public void excluir(PessoaFisica pessoaFisica) {
         pessoasFisicas.remove(pessoaFisica);
+        System.out.println("\n**** Pessoa Física excluída com sucesso ****");
     }
     
     public Optional<PessoaFisica> obter(int id) {
@@ -57,19 +57,24 @@ public class PessoaFisicaRepo {
     public String obterTodos() {
         this.pessoasFisicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
         String pessoasFisicas = "\n-------------------------------------";
-        for (PessoaFisica pessoaFisica: this.pessoasFisicas) {
-            pessoasFisicas += "\n" + pessoaFisica.exibir() + "-------------------------------------";
+        if (!this.pessoasFisicas.isEmpty()) {
+            for (PessoaFisica pessoaFisica: this.pessoasFisicas) {
+                pessoasFisicas += "\n" + pessoaFisica.exibir() + "-------------------------------------";
+            }
+        } else {
+            pessoasFisicas += "\n" + "Não há pessoas físicas inseridas\n-------------------------------------";
         }
+        
         return pessoasFisicas;
     }
     
     public String persistir(String prefixo) throws Exception {
         String nomeArquivo = prefixo + ".fisica.bin";
-        recuperar(prefixo); // Recupera os dados do arquivo 
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasFisicas);
-        System.out.println("Dados de Pessoa Física Armazenados.");
+        this.pessoasFisicas.clear();
+        System.out.println("**** Dados de Pessoa Física Armazenados ****");
         return nomeArquivo;
     }
     
@@ -78,9 +83,8 @@ public class PessoaFisicaRepo {
         if (new File(nomeArquivo).exists()) { // Verifica se o arquivo existe no diretório
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            List<PessoaFisica> dadosRecuperados = (List<PessoaFisica>) ois.readObject();
-            dadosRecuperados.forEach((dado) -> inserir(dado));
-            System.out.println("Dados de Pessoa Física Recuperados.");
+            this.pessoasFisicas = (List<PessoaFisica>) ois.readObject();
+            System.out.println("**** Dados de Pessoa Física Recuperados ****");
         } else {
             System.out.println("ATENÇÃO: Dados não recuperados, pois não existe arquivo persistido com o prefixo " + prefixo);
         }
