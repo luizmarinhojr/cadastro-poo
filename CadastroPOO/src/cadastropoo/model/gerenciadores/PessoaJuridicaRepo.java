@@ -37,14 +37,15 @@ public class PessoaJuridicaRepo {
         }
     }
     
-    public void alterar(PessoaJuridica pessoaJuridica, Integer id, String nome, String cnpj) {
-        pessoaJuridica.setId(id);
-        pessoaJuridica.setNome(nome);
-        pessoaJuridica.setCnpj(cnpj);
+    public void alterar(PessoaJuridica pessoaJuridicaAtual, PessoaJuridica pessoaJuridicaNova) {
+        pessoaJuridicaAtual.setId(pessoaJuridicaNova.getId());
+        pessoaJuridicaAtual.setNome(pessoaJuridicaNova.getNome());
+        pessoaJuridicaAtual.setCnpj(pessoaJuridicaNova.getCnpj());
     }
     
     public void excluir(PessoaJuridica pessoaJuridica) {
         this.pessoasJuridicas.remove(pessoaJuridica);
+        System.out.println("\n**** Pessoa Jurídica excluída com sucesso ****");
     }
     
     public Optional<PessoaJuridica> obter(int id) {
@@ -56,18 +57,22 @@ public class PessoaJuridicaRepo {
     public String obterTodos() {
         this.pessoasJuridicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
         String pessoasJuridicas = "";
-        for (PessoaJuridica pessoa: this.pessoasJuridicas) {
-            pessoasJuridicas += pessoa.exibir();
+        if (!this.pessoasJuridicas.isEmpty()) {
+            for (PessoaJuridica pessoa: this.pessoasJuridicas) {
+                pessoasJuridicas += pessoa.exibir();
+            }
+        } else {
+            pessoasJuridicas += "\nNão há pessoas jurídicas inseridas\n";
         }
         return pessoasJuridicas;
     }
     
     public void persistir(String prefixo) throws Exception {
         String nomeArquivo = prefixo + ".juridica.bin";
-        recuperar(prefixo);
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasJuridicas);
+        this.pessoasJuridicas.clear();
         System.out.println("Dados de Pessoa Jurídica Armazenados.");
     }
     
@@ -76,9 +81,10 @@ public class PessoaJuridicaRepo {
         if (new File(nomeArquivo).exists()) {
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            List<PessoaJuridica> dadosRecuperados = (List<PessoaJuridica>) ois.readObject();
-            dadosRecuperados.forEach((dado) -> inserir(dado));
+            this.pessoasJuridicas = (List<PessoaJuridica>) ois.readObject();
             System.out.println("Dados de Pessoa Jurídica Recuperados.");
+        } else {
+            System.out.println("**** ATENÇÃO: Dados não recuperados, pois não existe arquivo persistido com o prefixo " + prefixo + " ****");
         }
     }
 
