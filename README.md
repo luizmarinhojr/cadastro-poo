@@ -15,8 +15,6 @@
 ```mermaid
 ---
 title: Cadastro POO
-config:
-    theme: dark
 ---
 
 classDiagram
@@ -26,39 +24,40 @@ classDiagram
     class PessoaJuridica
     class PessoaFisicaRepo
     class PessoaJuridicaRepo
-
+    
     PessoaFisicaRepo --> PessoaFisica
     PessoaJuridicaRepo --> PessoaJuridica
     Pessoa <|-- PessoaFisica
     Pessoa <|-- PessoaJuridica
     
-
+    
     <<Abstract>> Pessoa
     Pessoa : -int id
     Pessoa : -String nome
     Pessoa : +exibir()* String
-
+    
     PessoaFisica : -String cpf
     PessoaFisica : -int idade
     PessoaFisica : +exibir() String
-
+    
     PessoaJuridica : -String cnpj
     PessoaJuridica : +exibir() String
-
+    
     PessoaFisicaRepo : -List<PessoaFisica> pessoasFisicas
     PessoaFisicaRepo : +inserir(pessoaFisica) void
-    PessoaFisicaRepo : +alterar() void
-    PessoaFisicaRepo : +excluir() void
+    PessoaFisicaRepo : +alterar(pessoaFisica) void
+    PessoaFisicaRepo : +excluir(pessoaFisica) void
+    PessoaFisicaRepo : +obter(id) Optional<PessoaJuridica>
     PessoaFisicaRepo : +obterTodos() String
-    PessoaFisicaRepo : +persistir() String
-    PessoaFisicaRepo : +recuperar() void
-
+    PessoaFisicaRepo : +persistir(prefixo) void
+    PessoaFisicaRepo : +recuperar(prefixo) void
+    
     PessoaJuridicaRepo : -List<PessoaJuridica> pessoasFisicas
     PessoaJuridicaRepo : +inserir(pessoaJuridica) void
-    PessoaJuridicaRepo : +alterar() void
-    PessoaJuridicaRepo : +excluir() void
+    PessoaJuridicaRepo : +alterar(pessoaJuridica) void
+    PessoaJuridicaRepo : +excluir(pessoaJuridica) void
+    PessoaJuridicaRepo : +obter(id) Optional<PessoaJuridica>
     PessoaJuridicaRepo : +obterTodos() String
-    PessoaJuridicaRepo : +persistir() String
-    PessoaJuridicaRepo : +recuperar() void
-    
+    PessoaJuridicaRepo : +persistir(prefixo) void
+    PessoaJuridicaRepo : +recuperar(prefixo) void
 ```
