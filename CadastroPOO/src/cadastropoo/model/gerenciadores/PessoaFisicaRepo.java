@@ -29,7 +29,7 @@ public class PessoaFisicaRepo {
     public void inserir(PessoaFisica... pessoasFisicas) {
         for (PessoaFisica pessoaFisica: pessoasFisicas) {
             if (this.pessoasFisicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaFisica.getId())) {
-                System.out.println("A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array."
+                System.out.println("**** A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
                         .formatted(pessoaFisica.getNome(), pessoaFisica.getId()));
             } else {
                 this.pessoasFisicas.add(pessoaFisica);
@@ -37,8 +37,11 @@ public class PessoaFisicaRepo {
         }
     }
     
-    public void alterar(List<PessoaFisica> pessoasFisicas) {
-        this.pessoasFisicas = pessoasFisicas;
+    public void alterar(PessoaFisica pessoaFisica, Integer id, String nome, String cpf, Integer idade) {
+        pessoaFisica.setId(id);
+        pessoaFisica.setNome(nome);
+        pessoaFisica.setCpf(cpf);
+        pessoaFisica.setIdade(idade);
     }
     
     public void excluir(PessoaFisica pessoaFisica) {
@@ -60,15 +63,17 @@ public class PessoaFisicaRepo {
         return pessoasFisicas;
     }
     
-    public void persistir(String nomeArquivo) throws Exception {
-        recuperar(nomeArquivo); // Recupera os dados do arquivo 
+    public void persistir(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".fisica.bin";
+        recuperar(prefixo); // Recupera os dados do arquivo 
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasFisicas);
         System.out.println("Dados de Pessoa Física Armazenados.");
     }
     
-    public void recuperar(String nomeArquivo) throws Exception {
+    public void recuperar(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".fisica.bin";
         if (new File(nomeArquivo).exists()) { // Verifica se o arquivo existe no diretório
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);

@@ -35,7 +35,7 @@ public class CadastroPOO {
         repo1.inserir(pessoaFisica1, pessoaFisica2);
 
         try {
-            repo1.persistir("PessoasFisicas.bin");
+            repo1.persistir("controle");
         } catch (Exception ex) {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
@@ -43,7 +43,7 @@ public class CadastroPOO {
         PessoaFisicaRepo repo2 = new PessoaFisicaRepo();
         
         try {
-            repo2.recuperar("PessoasFisicas.bin");
+            repo2.recuperar("controle");
         } catch(Exception ex) {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
@@ -66,7 +66,7 @@ public class CadastroPOO {
         repo3.inserir(pessoaJuridica1, pessoaJuridica2);
         
         try {
-            repo3.persistir("PessoasJuridicas.bin");
+            repo3.persistir("financeiro");
         } catch (Exception ex) {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
@@ -74,7 +74,7 @@ public class CadastroPOO {
         PessoaJuridicaRepo repo4 = new PessoaJuridicaRepo();
         
         try {
-            repo4.recuperar("PessoasJuridicas.bin");
+            repo4.recuperar("financeiro");
         } catch(Exception ex) {
             System.out.println("Houve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }

@@ -29,7 +29,7 @@ public class PessoaJuridicaRepo {
     public void inserir(PessoaJuridica... pessoasJuridicas) {
         for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
             if (this.pessoasJuridicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaJuridica.getId())) {
-                System.out.println("A pessoa jurídica %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array."
+                System.out.println("**** A pessoa jurídica %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
                                     .formatted(pessoaJuridica.getNome(), pessoaJuridica.getId()));
             } else {
                 this.pessoasJuridicas.add(pessoaJuridica);
@@ -37,8 +37,10 @@ public class PessoaJuridicaRepo {
         }
     }
     
-    public void alterar(List<PessoaJuridica> pessoasJuridicas) {
-        this.pessoasJuridicas = pessoasJuridicas;
+    public void alterar(PessoaJuridica pessoaJuridica, Integer id, String nome, String cnpj) {
+        pessoaJuridica.setId(id);
+        pessoaJuridica.setNome(nome);
+        pessoaJuridica.setCnpj(cnpj);
     }
     
     public void excluir(PessoaJuridica pessoaJuridica) {
@@ -60,15 +62,17 @@ public class PessoaJuridicaRepo {
         return pessoasJuridicas;
     }
     
-    public void persistir(String nomeArquivo) throws Exception {
-        recuperar(nomeArquivo);
+    public void persistir(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".juridica.bin";
+        recuperar(prefixo);
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasJuridicas);
         System.out.println("Dados de Pessoa Jurídica Armazenados.");
     }
     
-    public void recuperar(String nomeArquivo) throws Exception {
+    public void recuperar(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".juridica.bin";
         if (new File(nomeArquivo).exists()) {
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);
