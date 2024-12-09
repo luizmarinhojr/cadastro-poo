@@ -60,3 +60,28 @@ classDiagram
     PessoaJuridicaRepo : +persistir(prefixo) void
     PessoaJuridicaRepo : +recuperar(prefixo) void
 ```
+
+## Saída resultante da execução do programa
+
+```
+run:
+Dados de Pessoa Física Armazenados.
+Dados de Pessoa Física Recuperados.
+Id: 1
+Nome: Ana
+CPF: 11111111111
+Idade: 25
+Id: 2
+Nome: Carlos
+CPF: 22222222222
+Idade: 52
+Dados de Pessoa Jurídica Armazenados.
+Dados de Pessoa Jurídica Recuperados.
+Id: 3
+Nome: XPTO Sales
+CNPJ: 33333333333333
+Id: 4
+Nome: XPTO Solutions
+CNPJ: 44444444444444
+BUILD SUCCESSFUL (total time: 0 seconds)
+```
