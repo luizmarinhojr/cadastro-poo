@@ -47,7 +47,7 @@ classDiagram
     PessoaFisicaRepo : +inserir(pessoaFisica) void
     PessoaFisicaRepo : +alterar(pessoaFisica) void
     PessoaFisicaRepo : +excluir(pessoaFisica) void
-    PessoaFisicaRepo : +obter(id) Optional<PessoaJuridica>
+    PessoaFisicaRepo : +obter(id) Optional~PessoaJuridica~
     PessoaFisicaRepo : +obterTodos() String
     PessoaFisicaRepo : +persistir(prefixo) void
     PessoaFisicaRepo : +recuperar(prefixo) void
@@ -56,7 +56,7 @@ classDiagram
     PessoaJuridicaRepo : +inserir(pessoaJuridica) void
     PessoaJuridicaRepo : +alterar(pessoaJuridica) void
     PessoaJuridicaRepo : +excluir(pessoaJuridica) void
-    PessoaJuridicaRepo : +obter(id) Optional<PessoaJuridica>
+    PessoaJuridicaRepo : +obter(id) Optional~PessoaJuridica~
     PessoaJuridicaRepo : +obterTodos() String
     PessoaJuridicaRepo : +persistir(prefixo) void
     PessoaJuridicaRepo : +recuperar(prefixo) void
