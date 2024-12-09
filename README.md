@@ -1,5 +1,4 @@
-# 1ª Procedimento
-## Criação das Entidades e Sistema de Persistência
+# 1ª Procedimento - Criação das Entidades e Sistema de Persistência
 ❕Essa branch se refere somente ao 1ª Procedimento.
 
 ## Objetivos desse procedimento
