@@ -26,25 +26,25 @@ public class PessoaJuridicaRepo {
         pessoasJuridicas = new ArrayList();
     }
     
-    public void inserir(PessoaJuridica... pessoasJuridicas) {
-        for (PessoaJuridica pessoaJuridica: pessoasJuridicas) {
-            if (this.pessoasJuridicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaJuridica.getId())) {
-                System.out.println("\n**** A pessoa jurídica %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
-                                    .formatted(pessoaJuridica.getNome(), pessoaJuridica.getId()));
-            } else {
-                this.pessoasJuridicas.add(pessoaJuridica);
-            }
+    public void inserir(PessoaJuridica pessoaJuridica) {
+        if (this.pessoasJuridicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaJuridica.getId())) {
+            System.out.println("\n**** A pessoa jurídica %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
+                                .formatted(pessoaJuridica.getNome(), pessoaJuridica.getId()));
+        } else {
+            this.pessoasJuridicas.add(pessoaJuridica);
+            System.out.println("\n**** Pessoa Jurídica inserida com sucesso ****");
         }
     }
     
-    public void alterar(PessoaJuridica pessoaJuridica, Integer id, String nome, String cnpj) {
-        pessoaJuridica.setId(id);
-        pessoaJuridica.setNome(nome);
-        pessoaJuridica.setCnpj(cnpj);
+    public void alterar(PessoaJuridica pessoaJuridicaAtual, PessoaJuridica pessoaJuridicaNova) {
+        pessoaJuridicaAtual.setId(pessoaJuridicaNova.getId());
+        pessoaJuridicaAtual.setNome(pessoaJuridicaNova.getNome());
+        pessoaJuridicaAtual.setCnpj(pessoaJuridicaNova.getCnpj());
     }
     
     public void excluir(PessoaJuridica pessoaJuridica) {
         this.pessoasJuridicas.remove(pessoaJuridica);
+        System.out.println("\n**** Pessoa Jurídica excluída com sucesso ****");
     }
     
     public Optional<PessoaJuridica> obter(int id) {
@@ -56,19 +56,24 @@ public class PessoaJuridicaRepo {
     public String obterTodos() {
         this.pessoasJuridicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
         String pessoasJuridicas = "\n-------------------------------------";
-        for (PessoaJuridica pessoa: this.pessoasJuridicas) {
-            pessoasJuridicas += "\n" + pessoa.exibir() + "-------------------------------------";
+        if (!this.pessoasJuridicas.isEmpty()) {
+            for (PessoaJuridica pessoa: this.pessoasJuridicas) {
+                pessoasJuridicas += "\n" + pessoa.exibir() + "-------------------------------------";
+            }
+        } else {
+            pessoasJuridicas += "\n" + "Não há pessoas jurídicas inseridas\n-------------------------------------";
         }
+        
         return pessoasJuridicas;
     }
     
     public String persistir(String prefixo) throws Exception {
         String nomeArquivo = prefixo + ".juridica.bin";
-        recuperar(prefixo);
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasJuridicas);
-        System.out.println("Dados de Pessoa Jurídica Armazenados.");
+        this.pessoasJuridicas.clear();
+        System.out.println("**** Dados de Pessoa Jurídica Armazenados ****");
         return nomeArquivo;
     }
     
@@ -77,11 +82,10 @@ public class PessoaJuridicaRepo {
         if (new File(nomeArquivo).exists()) {
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            List<PessoaJuridica> dadosRecuperados = (List<PessoaJuridica>) ois.readObject();
-            dadosRecuperados.forEach((dado) -> inserir(dado));
-            System.out.println("Dados de Pessoa Jurídica Recuperados.");
+            this.pessoasJuridicas = (List<PessoaJuridica>) ois.readObject();
+            System.out.println("**** Dados de Pessoa Jurídica Recuperados ****");
         } else {
-            System.out.println("ATENÇÃO: Dados não recuperados, pois não existe arquivo persistido com o prefixo " + prefixo);
+            System.out.println("**** ATENÇÃO: Dados não recuperados, pois não existe arquivo persistido com o prefixo " + prefixo + " ****");
         }
     }
 

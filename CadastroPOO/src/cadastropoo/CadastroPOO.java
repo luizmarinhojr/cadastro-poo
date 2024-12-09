@@ -21,11 +21,10 @@ public class CadastroPOO {
      * @param args the command line arguments
      */
     
-    static Scanner leitor = new Scanner(System.in);
+    static final Scanner LEITOR = new Scanner(System.in);
     
-    static PessoaFisicaRepo fisicaRepo = new PessoaFisicaRepo();
-    
-    static PessoaJuridicaRepo juridicaRepo = new PessoaJuridicaRepo();
+    static final PessoaFisicaRepo FISICAREPO = new PessoaFisicaRepo();
+    static final PessoaJuridicaRepo JURIDICAREPO = new PessoaJuridicaRepo();
     
     public static void main(String[] args) {
         
@@ -33,6 +32,7 @@ public class CadastroPOO {
         
         String opcoes = """
                         
+                     MENU PRINCIPAL
         =======================================
         1 - Incluir Pessoa
         2 - Alterar Pessoa
@@ -50,7 +50,7 @@ public class CadastroPOO {
             System.out.print("Digite o número da opção -> ");
             do {
                 try {
-                    escolhaMenu = Integer.parseInt(leitor.nextLine());
+                    escolhaMenu = Integer.parseInt(LEITOR.nextLine());
                     escolhaValida = true;
                 } catch(NumberFormatException ex) {
                     System.out.println("\nEntrada inválida, tente novamente");
@@ -87,6 +87,8 @@ public class CadastroPOO {
             
             case "J" -> incluirPessoaJuridica();
         }
+        digiteParaVoltarAoMenu();
+        
     }
     
     private static void alterarPessoa() {
@@ -95,30 +97,34 @@ public class CadastroPOO {
                 
             case "J" -> alterarPessoaJuridica();
         }
+        digiteParaVoltarAoMenu();
     }
     
     private static void excluirPessoa() {
-         switch(selecionarTipoPessoa().toUpperCase()) {
+        switch(selecionarTipoPessoa().toUpperCase()) {
             case "F" -> excluirPessoaFisica();
             
             case "J" -> excluirPessoaJuridica();
         }
+        digiteParaVoltarAoMenu();
     }
 
     private static void buscarPeloId() {
-         switch(selecionarTipoPessoa().toUpperCase()) {
+        switch(selecionarTipoPessoa().toUpperCase()) {
             case "F" -> buscarPessoaFisicaPeloId();
             
             case "J" -> buscarPessoaJuridicaPeloId();
         }
+        digiteParaVoltarAoMenu();
     }
     
     private static void exibirTodos() {
         switch(selecionarTipoPessoa().toUpperCase()) {
-            case "F" -> System.out.println("\n**** Todas as pessoas físicas ****\n" + fisicaRepo.obterTodos());
+            case "F" -> System.out.println("\n**** Todas as pessoas físicas ****\n" + FISICAREPO.obterTodos());
             
-            case "J" -> System.out.println("\n**** Todas as pessoas jurídicas ****\n" + juridicaRepo.obterTodos());
+            case "J" -> System.out.println("\n**** Todas as pessoas jurídicas ****\n" + JURIDICAREPO.obterTodos());
         }
+        digiteParaVoltarAoMenu();
     }
     
     private static void persistirDados() {
@@ -127,6 +133,7 @@ public class CadastroPOO {
                 
             case "J" -> persistirPessoaJuridica();
         }
+        digiteParaVoltarAoMenu();
     }
     
     private static void recuperarDados() {
@@ -135,10 +142,22 @@ public class CadastroPOO {
                 
             case "J" -> recuperarPessoaJuridica();
         }
+        digiteParaVoltarAoMenu();
     }
     
-    
     // INÍCIO FUNÇÕES AUXILIARES
+    
+    private static void digiteParaVoltarAoMenu() {
+        int escolhaMenu = -1;
+        do {
+            try {
+                System.out.print("\nDigite 1 para voltar ao Menu Principal -> ");
+                escolhaMenu = Integer.parseInt(LEITOR.nextLine());
+            } catch(NumberFormatException ex) {
+                System.out.println("\nEntrada inválida, tente novamente");
+            }
+        } while(escolhaMenu != 1);
+    }
     
     private static String selecionarTipoPessoa() {
         String escolhaMenu = "";
@@ -146,7 +165,7 @@ public class CadastroPOO {
         do {
             System.out.println("\nF - Pessoa física   |   J - Pessoa Jurídica");
             System.out.print("Digite a letra da opção desejada -> ");
-            escolhaMenu = leitor.nextLine();
+            escolhaMenu = LEITOR.nextLine();
             
         } while(!(escolhaMenu.equalsIgnoreCase("F") || escolhaMenu.equalsIgnoreCase("J")));
         
@@ -159,7 +178,7 @@ public class CadastroPOO {
         do {
             try {
                 System.out.print("\nDigite o ID da pessoa " + tipoPessoa + " -> ");
-                idPessoa = Integer.parseInt(leitor.nextLine());
+                idPessoa = Integer.parseInt(LEITOR.nextLine());
                 escolhaValida = true;
             } catch(NumberFormatException ex) {
                 System.out.println("Entrada inválida, tente novamente");
@@ -175,7 +194,7 @@ public class CadastroPOO {
         do {
             try {
                 System.out.print("\nIdade -> ");
-                idadePessoa = Integer.parseInt(leitor.nextLine());
+                idadePessoa = Integer.parseInt(LEITOR.nextLine());
                 escolhaValida = true;
             } catch(NumberFormatException ex) {
                 System.out.println("Entrada inválida, tente novamente");
@@ -190,14 +209,14 @@ public class CadastroPOO {
         
         System.out.println("\nInsira os dados...");
         System.out.print("\nNome -> ");
-        String nomePessoa = leitor.nextLine();
+        String nomePessoa = LEITOR.nextLine();
         
         System.out.print("\nCPF (Somente números) -> ");
-        String cpfPessoa = leitor.nextLine();
+        String cpfPessoa = LEITOR.nextLine();
         
         Integer idadePessoa = digitarIdadePessoa();
         
-        fisicaRepo.inserir(new PessoaFisica(idPessoa, nomePessoa, cpfPessoa, idadePessoa));
+        FISICAREPO.inserir(new PessoaFisica(idPessoa, nomePessoa, cpfPessoa, idadePessoa));
     }
     
     private static void incluirPessoaJuridica() {
@@ -205,12 +224,12 @@ public class CadastroPOO {
 
         System.out.println("\nInsira os dados...");
         System.out.print("\nNome -> ");
-        String nomePessoa = leitor.nextLine();
+        String nomePessoa = LEITOR.nextLine();
 
         System.out.print("\nCNPJ (Somente números) -> ");
-        String cnpjPessoa = leitor.nextLine();
+        String cnpjPessoa = LEITOR.nextLine();
 
-        juridicaRepo.inserir(new PessoaJuridica(idPessoa, nomePessoa, cnpjPessoa));
+        JURIDICAREPO.inserir(new PessoaJuridica(idPessoa, nomePessoa, cnpjPessoa));
     }
     
     private static void alterarPessoaFisica() {
@@ -221,7 +240,7 @@ public class CadastroPOO {
             do {
                 System.out.println("Deseja alterar essa pessoa física? (S) Sim | (N) Não ");
                 System.out.print("\nDigite a letra da opção desejada -> ");
-                escolhaMenu = leitor.nextLine();
+                escolhaMenu = LEITOR.nextLine();
             } while(!(escolhaMenu.equalsIgnoreCase("S") || escolhaMenu.equalsIgnoreCase("N")));
             
             switch (escolhaMenu.toUpperCase()) {
@@ -229,11 +248,11 @@ public class CadastroPOO {
                     System.out.println("\nInsira os novos dados...");
                     Integer idPessoa = digitarIdPessoa("física");
                     System.out.print("\nNome -> ");
-                    String nomePessoa = leitor.nextLine();
+                    String nomePessoa = LEITOR.nextLine();
                     System.out.print("\nCPF (Somente números) -> ");
-                    String cpfPessoa = leitor.nextLine();
+                    String cpfPessoa = LEITOR.nextLine();
                     Integer idadePessoa = digitarIdadePessoa();
-                    fisicaRepo.alterar(pessoaFisica.get(), idPessoa, nomePessoa, cpfPessoa, idadePessoa);
+                    FISICAREPO.alterar(pessoaFisica.get(), new PessoaFisica(idPessoa, nomePessoa, cpfPessoa, idadePessoa));
                 }
                     
                 case "N" -> System.out.println("\nPessoa física não alterada. Voltando para o menu...");
@@ -250,7 +269,7 @@ public class CadastroPOO {
             do {
                 System.out.println("Deseja alterar essa pessoa jurídica? (S) Sim | (N) Não ");
                 System.out.print("Digite a letra da opção desejada -> ");
-                escolhaMenu = leitor.nextLine();
+                escolhaMenu = LEITOR.nextLine();
             } while(!(escolhaMenu.equalsIgnoreCase("S") || escolhaMenu.equalsIgnoreCase("N")));
             
             switch (escolhaMenu.toUpperCase()) {
@@ -258,10 +277,10 @@ public class CadastroPOO {
                     System.out.println("\nInsira os novos dados...");
                     Integer idPessoa = digitarIdPessoa("jurídica");
                     System.out.print("\nNome -> ");
-                    String nomePessoa = leitor.nextLine();
+                    String nomePessoa = LEITOR.nextLine();
                     System.out.print("\nCNPJ (Somente números) -> ");
-                    String cnpjPessoa = leitor.nextLine();
-                    juridicaRepo.alterar(pessoaJuridica.get(), idPessoa, nomePessoa, cnpjPessoa);
+                    String cnpjPessoa = LEITOR.nextLine();
+                    JURIDICAREPO.alterar(pessoaJuridica.get(), new PessoaJuridica(idPessoa, nomePessoa, cnpjPessoa));
                 }
                 
                 case "N" -> System.out.println("\nPessoa física não alterada. Voltando para o menu...");
@@ -274,13 +293,13 @@ public class CadastroPOO {
         Optional<PessoaFisica> pessoaFisica = buscarPessoaFisicaPeloId();
         if (pessoaFisica.isPresent()) {
             do {
-                System.out.println("Deseja excluir essa pessoa física do registro? (S) Sim | (N) Não ");
+                System.out.println("Deseja excluir " + pessoaFisica.get().getNome() + " do registro? (S) Sim | (N) Não ");
                 System.out.print("Digite a letra da opção desejada -> ");
-                escolhaMenu = leitor.nextLine();
+                escolhaMenu = LEITOR.nextLine();
             } while(!(escolhaMenu.equalsIgnoreCase("S") || escolhaMenu.equalsIgnoreCase("N")));
             
             switch (escolhaMenu.toUpperCase()) {
-                case "S" -> fisicaRepo.excluir(pessoaFisica.get());
+                case "S" -> FISICAREPO.excluir(pessoaFisica.get());
                     
                 case "N" -> System.out.println("\nPessoa física não excluída. Voltando para o menu...");
             }
@@ -294,13 +313,13 @@ public class CadastroPOO {
         Optional<PessoaJuridica> pessoaJuridica = buscarPessoaJuridicaPeloId();
         if (pessoaJuridica.isPresent()) {
             do {
-                System.out.println("Deseja excluir essa pessoa jurídica do registro? (S) Sim | (N) Não ");
+                System.out.println("Deseja excluir " + pessoaJuridica.get().getNome() + " do registro? (S) Sim | (N) Não ");
                 System.out.print("Digite a letra da opção desejada -> ");
-                escolhaMenu = leitor.nextLine();
+                escolhaMenu = LEITOR.nextLine();
             } while(!(escolhaMenu.equalsIgnoreCase("S") || escolhaMenu.equalsIgnoreCase("N")));
             
             switch (escolhaMenu.toUpperCase()) {
-                case "S" -> juridicaRepo.excluir(pessoaJuridica.get());
+                case "S" -> JURIDICAREPO.excluir(pessoaJuridica.get());
                     
                 case "N" -> System.out.println("\nPessoa jurídica não excluída. Voltando para o menu...");
             }
@@ -311,7 +330,7 @@ public class CadastroPOO {
     
     private static Optional<PessoaFisica> buscarPessoaFisicaPeloId() {
         Integer idPessoa = digitarIdPessoa("física");
-        Optional<PessoaFisica> pessoaFisica = fisicaRepo.obter(idPessoa);
+        Optional<PessoaFisica> pessoaFisica = FISICAREPO.obter(idPessoa);
         if (pessoaFisica.isPresent()) {
             System.out.println("\n**** Pessoa física ****\n" + pessoaFisica.get().exibir());
             return pessoaFisica;
@@ -322,7 +341,7 @@ public class CadastroPOO {
     
     private static Optional<PessoaJuridica> buscarPessoaJuridicaPeloId() {
         Integer idPessoa = digitarIdPessoa("jurídica");
-        Optional<PessoaJuridica> pessoaJuridica = juridicaRepo.obter(idPessoa);
+        Optional<PessoaJuridica> pessoaJuridica = JURIDICAREPO.obter(idPessoa);
         if (pessoaJuridica.isPresent()) {
             System.out.println("\n**** Pessoa jurídica ****\n" + pessoaJuridica.get().exibir());
             return pessoaJuridica;
@@ -333,10 +352,10 @@ public class CadastroPOO {
     
     private static void persistirPessoaFisica() {
         System.out.print("\nDigite o prefixo do nome do arquivo -> ");
-        String prefixo = leitor.nextLine();
+        String prefixo = LEITOR.nextLine();
         try {
             System.out.println();
-            String nomeArquivo = fisicaRepo.persistir(prefixo);
+            String nomeArquivo = FISICAREPO.persistir(prefixo);
             System.out.println("\nO nome do arquivo persistido é -> " + nomeArquivo);
         } catch(Exception ex) {
             System.out.println("\nHouve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
@@ -345,10 +364,10 @@ public class CadastroPOO {
     
     private static void persistirPessoaJuridica() {
         System.out.print("\nDigite o prefixo do nome do arquivo -> ");
-        String prefixo = leitor.nextLine();
+        String prefixo = LEITOR.nextLine();
         try {
             System.out.println();
-            String nomeArquivo = juridicaRepo.persistir(prefixo);
+            String nomeArquivo = JURIDICAREPO.persistir(prefixo);
             System.out.println("\nO nome do arquivo persistido é -> " + nomeArquivo);
         } catch(Exception ex) {
             System.out.println("\nHouve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
@@ -357,10 +376,10 @@ public class CadastroPOO {
     
     private static void recuperarPessoaFisica() {
         System.out.print("\nDigite o prefixo do nome do arquivo -> ");
-        String prefixo = leitor.nextLine();
+        String prefixo = LEITOR.nextLine();
         try {
             System.out.println();
-            fisicaRepo.recuperar(prefixo);
+            FISICAREPO.recuperar(prefixo);
         } catch(Exception ex) {
             System.out.println("\nHouve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
@@ -368,10 +387,10 @@ public class CadastroPOO {
     
     private static void recuperarPessoaJuridica() {
         System.out.print("\nDigite o prefixo do nome do arquivo -> ");
-        String prefixo = leitor.nextLine();
+        String prefixo = LEITOR.nextLine();
         try {
             System.out.println();
-            juridicaRepo.recuperar(prefixo);
+            JURIDICAREPO.recuperar(prefixo);
         } catch(Exception ex) {
             System.out.println("\nHouve um erro ao armazenar os dados.\n" + "Erro: " + ex.getMessage());
         }
