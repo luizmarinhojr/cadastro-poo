@@ -64,3 +64,8 @@ classDiagram
     PessoaJuridicaRepo : +persistir(prefixo) String
     PessoaJuridicaRepo : +recuperar(prefixo) void
 ```
+
+## Funcionamento do programa
+
+[![thumbnail-youtube](https://github.com/user-attachments/assets/9180ebf7-6586-4dba-afa1-ffd3f2c19a73)](https://youtu.be/3Xbii-ZHBXQ)
+
