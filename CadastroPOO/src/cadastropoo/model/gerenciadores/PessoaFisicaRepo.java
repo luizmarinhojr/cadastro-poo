@@ -29,7 +29,7 @@ public class PessoaFisicaRepo {
     public void inserir(PessoaFisica... pessoasFisicas) {
         for (PessoaFisica pessoaFisica: pessoasFisicas) {
             if (this.pessoasFisicas.stream().anyMatch((pessoa) -> pessoa.getId() == pessoaFisica.getId())) {
-                System.out.println("A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array."
+                System.out.println("\n**** A pessoa física %s não foi inserida, pois o ID %d a que ela se refere já se encontra inserido no Array. ****"
                         .formatted(pessoaFisica.getNome(), pessoaFisica.getId()));
             } else {
                 this.pessoasFisicas.add(pessoaFisica);
@@ -37,8 +37,11 @@ public class PessoaFisicaRepo {
         }
     }
     
-    public void alterar(List<PessoaFisica> pessoasFisicas) {
-        this.pessoasFisicas = pessoasFisicas;
+    public void alterar(PessoaFisica pessoaFisica, Integer id, String nome, String cpf, Integer idade) {
+        pessoaFisica.setId(id);
+        pessoaFisica.setNome(nome);
+        pessoaFisica.setCpf(cpf);
+        pessoaFisica.setIdade(idade);
     }
     
     public void excluir(PessoaFisica pessoaFisica) {
@@ -53,28 +56,33 @@ public class PessoaFisicaRepo {
 
     public String obterTodos() {
         this.pessoasFisicas.sort((p1, p2) -> Integer.compare(p1.getId(), p2.getId()));
-        String pessoasFisicas = "";
+        String pessoasFisicas = "\n-------------------------------------";
         for (PessoaFisica pessoaFisica: this.pessoasFisicas) {
-            pessoasFisicas += pessoaFisica.exibir();
+            pessoasFisicas += "\n" + pessoaFisica.exibir() + "-------------------------------------";
         }
         return pessoasFisicas;
     }
     
-    public void persistir(String nomeArquivo) throws Exception {
-        recuperar(nomeArquivo); // Recupera os dados do arquivo 
+    public String persistir(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".fisica.bin";
+        recuperar(prefixo); // Recupera os dados do arquivo 
         FileOutputStream fos = new FileOutputStream(nomeArquivo);
         ObjectOutputStream ous = new ObjectOutputStream(fos);
         ous.writeObject(this.pessoasFisicas);
         System.out.println("Dados de Pessoa Física Armazenados.");
+        return nomeArquivo;
     }
     
-    public void recuperar(String nomeArquivo) throws Exception {
+    public void recuperar(String prefixo) throws Exception {
+        String nomeArquivo = prefixo + ".fisica.bin";
         if (new File(nomeArquivo).exists()) { // Verifica se o arquivo existe no diretório
             FileInputStream fis = new FileInputStream(nomeArquivo);
             ObjectInputStream ois = new ObjectInputStream(fis);
             List<PessoaFisica> dadosRecuperados = (List<PessoaFisica>) ois.readObject();
             dadosRecuperados.forEach((dado) -> inserir(dado));
             System.out.println("Dados de Pessoa Física Recuperados.");
+        } else {
+            System.out.println("ATENÇÃO: Dados não recuperados, pois não existe arquivo persistido com o prefixo " + prefixo);
         }
     }
 }
