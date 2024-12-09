@@ -58,40 +58,23 @@ public class CadastroPOO {
             } while (!escolhaValida);
 
             switch (escolhaMenu) {
-                case 1: 
-                    incluirPessoa();
-                    break;
+                case 1 -> incluirPessoa();
                     
-                case 2:
-                    alterarPessoa();
-                    break;
+                case 2 -> alterarPessoa();
                     
-                case 3:
-                    excluirPessoa();
-                    break;
+                case 3 -> excluirPessoa();
                     
-                case 4:
-                    buscarPeloId();
-                    break;
+                case 4 -> buscarPeloId();
                     
-                case 5:
-                    exibirTodos();
-                    break;
+                case 5 -> exibirTodos();
                     
-                case 6:
-                    persistirDados();
-                    break;
+                case 6 -> persistirDados();
                     
-                case 7:
-                    recuperarDados();
-                    break;
+                case 7 -> recuperarDados();
                     
-                case 0:
-                    System.out.println("\nFinalizando o programa...");
-                    break;
+                case 0 -> System.out.println("\nFinalizando o programa...");
                 
-                default:
-                    System.out.println("\nOpção inválida! Tente novamente.");
+                default -> System.out.println("\nOpção inválida! Tente novamente.");
                     
             }
                     
