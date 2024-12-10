@@ -14,6 +14,14 @@
 utilizando os recursos da programação orientada a objetos e a persistência em
 arquivos binários.
 
+## Relatório discente de acompanhamento
+
+Os relatórios de cada Procedimento podem ser encontrados através desse próprio repositório, na branch específica do procedimento, ou através dos link a seguir:
+<br><br>
+1ª Procedimento: [https://drive.google.com/file/d/1MNnFF7SR2UBF3N8M25VBuHiBZsVfEdSD/view?usp=drive_link](https://drive.google.com/file/d/1MNnFF7SR2UBF3N8M25VBuHiBZsVfEdSD/view?usp=drive_link)
+<br><br>
+2ª Procedimento: [https://drive.google.com/file/d/1IGAla1yXvCWjHgsJaimdM2IkAWOhLmAf/view?usp=drive_link](https://drive.google.com/file/d/1IGAla1yXvCWjHgsJaimdM2IkAWOhLmAf/view?usp=drive_link)
+
 ## Tecnologias utilizadas
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![NetBeans IDE](https://img.shields.io/badge/NetBeansIDE-1B6AC6.svg?style=for-the-badge&logo=apache-netbeans-ide&logoColor=white)
@@ -68,6 +76,10 @@ classDiagram
     PessoaJuridicaRepo : +persistir(prefixo) String
     PessoaJuridicaRepo : +recuperar(prefixo) void
 ```
+
+## Funcionamento do programa
+
+[![thumbnail-youtube](https://github.com/user-attachments/assets/9180ebf7-6586-4dba-afa1-ffd3f2c19a73)](https://youtu.be/3Xbii-ZHBXQ)
 
 ## Funcionamento do programa
 
