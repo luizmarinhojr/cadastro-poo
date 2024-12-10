@@ -10,6 +10,11 @@
 utilizando os recursos da programação orientada a objetos e a persistência em
 arquivos binários.
 
+## Relatório discente de acompanhamento
+
+O relatório desse procedimento pode ser encontrado através desse próprio repositório ou através do link a seguir:
+[https://drive.google.com/file/d/1IGAla1yXvCWjHgsJaimdM2IkAWOhLmAf/view?usp=drive_link](https://drive.google.com/file/d/1IGAla1yXvCWjHgsJaimdM2IkAWOhLmAf/view?usp=drive_link)
+
 ## Tecnologias utilizadas
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![NetBeans IDE](https://img.shields.io/badge/NetBeansIDE-1B6AC6.svg?style=for-the-badge&logo=apache-netbeans-ide&logoColor=white)
