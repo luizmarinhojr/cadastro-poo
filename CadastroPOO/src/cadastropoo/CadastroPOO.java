@@ -66,7 +66,7 @@ public class CadastroPOO {
                     
                 case 4 -> buscarPeloId();
                     
-                case 5 -> exibirTodos();
+                case 5 -> obterTodos();
                     
                 case 6 -> persistirDados();
                     
@@ -118,7 +118,7 @@ public class CadastroPOO {
         digiteParaVoltarAoMenu();
     }
     
-    private static void exibirTodos() {
+    private static void obterTodos() {
         switch(selecionarTipoPessoa().toUpperCase()) {
             case "F" -> System.out.println("\n**** Todas as pessoas físicas ****\n" + FISICAREPO.obterTodos());
             
