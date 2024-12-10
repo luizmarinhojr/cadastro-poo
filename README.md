@@ -76,6 +76,8 @@ classDiagram
     PessoaJuridicaRepo : +persistir(prefixo) String
     PessoaJuridicaRepo : +recuperar(prefixo) void
 ```
+<br>
+<br>
 
 ## Funcionamento do programa
 
