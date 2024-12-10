@@ -8,7 +8,7 @@
 
 ## Relatório discente de acompanhamento
 
-O relatório pode ser encontrado através desse próprio repositório ou através do link a seguir:
+O relatório desse procedimento pode ser encontrado através desse próprio repositório ou através do link a seguir:
 [https://drive.google.com/file/d/1MNnFF7SR2UBF3N8M25VBuHiBZsVfEdSD/view?usp=drive_link](https://drive.google.com/file/d/1MNnFF7SR2UBF3N8M25VBuHiBZsVfEdSD/view?usp=drive_link)
 
 ## Tecnologias utilizadas
